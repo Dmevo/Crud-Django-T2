@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+</head>
+<body onload="get_form_produtos(), get_produtos()">
+    <h1>Produtos</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="pesquisa">Pesquisar:</label><br>
+        <input type="text" id="pesquisa">
+        <input type="submit" value="Pesquisar">
+    </form><br>
+    <div class="produto-area" id="produto-area" style="display: flex; flex-direction: column">
+    </div>
+    <div class="form-area" id="form-area">
+    </div>
+    <script>
+        function get_produtos() {
+            let xhr = new XMLHttpRequest()
+            xhr.open("GET", "{% url 'produtos' %}")
+            xhr.send(null)
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("produto-area").innerHTML = xhr.response;
+                }
+            }
+            return false
+        }
+    
+        function get_form_produtos() {
+            let http = new XMLHttpRequest()
+            http.open("GET", "{% url 'formulario' %}")
+            http.send(null)
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    document.getElementById("form-area").innerHTML = http.response
+                }
+            }
+            return false
+        }
+    
+        function adicionar(event){
+            event.preventDefault();
+
+            let xhr = new XMLHttpRequest()
+            xhr.open("POST", "{% url 'adicionar' %}")
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}")
+            let form = document.getElementById("form-add")
+            let formData = new FormData(form)
+            xhr.send(formData)
+            return false
+        }
+    </script>
+</body>
+</html>

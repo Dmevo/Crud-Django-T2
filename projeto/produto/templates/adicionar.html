@@ -1,0 +1,25 @@
+<h1>Adicionar produto</h1>
+<form id="form-add" method="post" onsubmit="adicionar(event)">
+    {% csrf_token %}
+    <div class="form-piece">
+        <label for="">Nome:</label><br>
+        {{ produto_form.nome }}
+    </div>
+    <div class="form-piece">
+        <label for="">Estoque:</label><br>
+        {{ produto_form.quant_estoque }}
+    </div>
+    <div class="form-piece">
+        <label for="">Preço unitário:</label><br>
+        {{ produto_form.preco_unitario }}
+    </div>
+    <div class="form-piece">
+        <label for="">URL da imagem:</label><br>
+        {{ produto_form.imagem }}
+    </div>
+    <div class="form-piece">
+        <label for="">Ativo:</label>
+        {{ produto_form.ativo }}
+    </div><br>
+    <input type="submit" value="Enviar">
+</form>
